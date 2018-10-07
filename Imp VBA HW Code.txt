@@ -1,0 +1,52 @@
+Sub Calculate_Stock()
+
+Dim ws As Worksheet
+For Each ws In Worksheets
+
+ws.Activate
+
+  ' Declare a variable for  Ticker Name
+  Dim Ticker As String
+
+ ' Declare a  variable Total Stock Volume
+  Dim StockVol As Variant
+    StockVol = 0
+
+  ' Keep track of the location for each ticker
+  Dim tickerRow As Integer
+    tickerRow = 2
+
+  Dim lastRow As Variant
+  lastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+  ' Loop through all rows of records in the file
+  For i = 2 To lastRow
+
+  ' Add to the Total Stock Volume
+    StockVol = StockVol + Cells(i, 7).Value
+
+    ' Check if  the next row has a different name as the current ticker
+    ' are we on the last row for this ticker
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+
+    ' Set the Ticker
+      Ticker = Cells(i, 1).Value
+
+      ' Print this info in the stock ticker table
+      Cells(tickerRow, 9).Value = Ticker
+      Cells(tickerRow, 10).Value = StockVol
+
+      ' Add one to the summary table row
+      tickerRow = tickerRow + 1
+
+      ' Reset the Stock Total
+      StockVol = 0
+      End If
+      Next i
+      
+      Next ws
+      End Sub
+
+
+
+
